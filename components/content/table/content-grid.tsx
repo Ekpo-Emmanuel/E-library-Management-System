@@ -70,7 +70,7 @@ export function ContentGrid({ content }: ContentGridProps) {
                   variant="outline" 
                   size="sm"
                   disabled={item.status !== 'available'}
-                  className={item.status === 'available' ? 'text-green-600' : 'text-muted-foreground'}
+                  className={item.status === 'available' ? 'text-green-600 w-full' : 'text-muted-foreground w-full'}
                 >
                   {item.status === 'available' ? (
                     <>
@@ -81,10 +81,10 @@ export function ContentGrid({ content }: ContentGridProps) {
                     item.status.charAt(0).toUpperCase() + item.status.slice(1)
                   )}
                 </Button>
-                <Button variant="ghost" size="icon" className="h-8 w-8">
+                {/* <Button variant="ghost" size="icon" className="h-8 w-8">
                   <Heart className="h-4 w-4" />
                   <span className="sr-only">Add to favorites</span>
-                </Button>
+                </Button> */}
               </div>
             </div>
           </div>

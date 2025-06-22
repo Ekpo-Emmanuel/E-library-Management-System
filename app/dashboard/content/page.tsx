@@ -92,8 +92,6 @@ export default async function ContentPage({
 
     // Add author filter if provided
     if (authorFilter) {
-      // This requires a more complex query since we need to filter by a related table
-      // First, get the content_ids that match the author
       const { data: authorContents } = await supabase
         .from('book_authors')
         .select('content_id')
