@@ -3,7 +3,7 @@ import { ResendVerificationButton } from '@/components/auth/resend-verification-
 
 export default function VerifyEmailPage() {
   return (
-    <div className="container flex h-screen w-screen flex-col items-center justify-center">
+    <div className="h-full">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle>Verify Your Email</CardTitle>

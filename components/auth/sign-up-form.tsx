@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useFormStatus } from 'react-dom'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -23,6 +24,7 @@ function SubmitButton() {
 
 export function SignUpForm() {
   const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
 
   async function handleSubmit(formData: FormData) {
     try {
@@ -36,10 +38,14 @@ export function SignUpForm() {
 
       const result = await signUp(formData)
       
-      if (result && 'type' in result) {
-        setError(result.message)
-        toast.error(result.message)
+      if ('success' in result) {
+        toast.success('Sign up successful')
+        router.push('/auth/verify-email')
+        return
       }
+      
+      setError(result.message)
+      toast.error(result.message)
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message)

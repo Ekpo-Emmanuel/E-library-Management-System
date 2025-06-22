@@ -36,7 +36,7 @@ export async function signIn(formData: FormData): Promise<AuthErrorResponse | { 
   }
 }
 
-export async function signUp(formData: FormData): Promise<AuthErrorResponse | void> {
+export async function signUp(formData: FormData): Promise<AuthErrorResponse | { success: true }> {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
   const name = formData.get('name') as string
@@ -53,6 +53,7 @@ export async function signUp(formData: FormData): Promise<AuthErrorResponse | vo
           name,
           role,
         },
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
       },
     })
 
@@ -60,8 +61,22 @@ export async function signUp(formData: FormData): Promise<AuthErrorResponse | vo
       return handleAuthError(error)
     }
 
+    // Check if user already exists but is unconfirmed
+    if (data?.user?.identities?.length === 0) {
+      return {
+        type: 'email_already_exists',
+        message: 'An account with this email already exists. Please sign in or reset your password.',
+      }
+    }
+
+    // If we get here, signup was successful
     if (data.user) {
-      return redirect('/auth/verify-email')
+      return { success: true }
+    }
+
+    return {
+      type: 'unknown_error',
+      message: 'Something went wrong. Please try again.',
     }
   } catch (error) {
     return handleAuthError(error)
