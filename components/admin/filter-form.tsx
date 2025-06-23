@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Filter, BookOpen } from 'lucide-react'
+import { Filter, BookOpen, Search } from 'lucide-react'
 
 interface FilterFormProps {
   genres?: {
@@ -67,6 +67,7 @@ export function FilterForm({ genres, defaultRole, defaultSearch }: FilterFormPro
   return (
     <div className="flex flex-col md:flex-row gap-4 mb-6">
       <div className="relative flex-1">
+        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
           name="search"
           placeholder="Search..."
@@ -102,7 +103,7 @@ export function FilterForm({ genres, defaultRole, defaultSearch }: FilterFormPro
               defaultValue={searchParams.get('status') ?? 'all'} 
               onValueChange={handleStatusChange}
             >
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <Filter className="h-4 w-4 mr-2" />
                 <SelectValue placeholder="Filter by status" />
               </SelectTrigger>
@@ -121,7 +122,7 @@ export function FilterForm({ genres, defaultRole, defaultSearch }: FilterFormPro
               defaultValue={searchParams.get('genre') ?? 'all'} 
               onValueChange={handleGenreChange}
             >
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <BookOpen className="h-4 w-4 mr-2" />
                 <SelectValue placeholder="Filter by genre" />
               </SelectTrigger>

@@ -18,11 +18,11 @@ const contentSchema = z.object({
   publisher: z.string().max(255).optional(),
   authorIds: z.array(z.number()),
   newAuthors: z.array(z.string()),
-  accessLevel: z.enum(['public', 'restricted', 'institution_only', 'subscription_only']).default('public'),
-  viewMode: z.enum(['full_access', 'view_only']).default('full_access'),
-  institutionId: z.string().optional(),
-  watermarkEnabled: z.boolean().default(false),
-  drmEnabled: z.boolean().default(false)
+  accessLevel: z.enum(['public', 'restricted', 'institution_only', 'subscription_only']).optional().default('public'),
+  viewMode: z.enum(['full_access', 'view_only']).optional().default('full_access'),
+  institutionId: z.string().optional().nullable(),
+  watermarkEnabled: z.boolean().optional().default(false),
+  drmEnabled: z.boolean().optional().default(false)
 }).refine(data => data.authorIds.length > 0 || data.newAuthors.length > 0, {
   message: "At least one author must be provided",
   path: ["authorIds"]
@@ -67,11 +67,11 @@ export async function uploadContent(formData: FormData) {
       publisher: formData.get('publisher') as string,
       authorIds: JSON.parse(formData.get('authorIds') as string),
       newAuthors: JSON.parse(formData.get('newAuthors') as string || '[]'),
-      accessLevel: formData.get('accessLevel') as ContentAccessLevel,
-      viewMode: formData.get('viewMode') as ContentViewMode,
-      institutionId: formData.get('institutionId') as string,
-      watermarkEnabled: formData.get('watermarkEnabled') === 'on',
-      drmEnabled: formData.get('drmEnabled') === 'on'
+      accessLevel: 'public' as ContentAccessLevel,
+      viewMode: 'full_access' as ContentViewMode,
+      institutionId: undefined,
+      watermarkEnabled: false,
+      drmEnabled: false
     }
 
     const validatedData = contentSchema.parse(contentData)
@@ -189,11 +189,11 @@ export async function uploadContent(formData: FormData) {
         p_publisher: validatedData.publisher ?? null,
         p_created_by: user.id,
         p_updated_by: user.id,
-        p_access_level: validatedData.accessLevel,
-        p_view_mode: validatedData.viewMode,
+        p_access_level: validatedData.accessLevel ?? 'public',
+        p_view_mode: validatedData.viewMode ?? 'full_access',
         p_institution_id: validatedData.institutionId ?? null,
-        p_watermark_enabled: validatedData.watermarkEnabled,
-        p_drm_enabled: validatedData.drmEnabled
+        p_watermark_enabled: validatedData.watermarkEnabled ?? false,
+        p_drm_enabled: validatedData.drmEnabled ?? false
       }
     )
 

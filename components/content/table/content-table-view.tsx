@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/table'
 import { flexRender } from '@tanstack/react-table'
 import type { Content } from './types'
+import { cn } from '@/lib/utils'
 
 interface ContentTableViewProps {
   table: any
@@ -24,7 +25,10 @@ export function ContentTableView({ table, columns }: ContentTableViewProps) {
           {table.getHeaderGroups().map((headerGroup: any) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header: any) => (
-                <TableHead key={header.id}>
+                <TableHead 
+                  key={header.id}
+                  className={cn(header.column.columnDef.meta?.className)}
+                >
                   {header.isPlaceholder
                     ? null
                     : flexRender(
@@ -44,7 +48,10 @@ export function ContentTableView({ table, columns }: ContentTableViewProps) {
                 data-state={row.getIsSelected() && "selected"}
               >
                 {row.getVisibleCells().map((cell: any) => (
-                  <TableCell key={cell.id}>
+                  <TableCell 
+                    key={cell.id}
+                    className={cn(cell.column.columnDef.meta?.className)}
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}

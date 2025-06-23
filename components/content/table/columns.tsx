@@ -41,6 +41,10 @@ export function getColumns(
       },
       cell: ({ row }) => {
         const content = row.original
+        const authors = content.book_authors
+          .map(ba => ba.authors.name)
+          .join(', ')
+        
         return (
           <div className="flex items-center gap-3">
             <div className="h-12 w-12 relative overflow-hidden rounded-md flex-shrink-0">
@@ -57,13 +61,18 @@ export function getColumns(
                 </div>
               )}
             </div>
-            <Button
-              variant="link"
-              className="p-0 h-auto font-medium text-left"
-              onClick={() => router.push(`/dashboard/content/view/${content.content_id}`)}
-            >
-              {content.title}
-            </Button>
+            <div className="min-w-0 flex-1">
+              <Button
+                variant="link"
+                className="p-0 h-auto font-medium text-left block w-full truncate"
+                onClick={() => router.push(`/dashboard/content/view/${content.content_id}`)}
+              >
+                {content.title}
+              </Button>
+              <div className="text-xs text-muted-foreground truncate">
+                {authors || 'Unknown Author'}
+              </div>
+            </div>
           </div>
         )
       },
@@ -72,6 +81,9 @@ export function getColumns(
       accessorKey: 'genres',
       header: 'Genre',
       cell: ({ row }) => row.original.genres?.name || '-',
+      meta: {
+        className: 'hidden md:table-cell',
+      },
     },
     {
       accessorKey: 'book_authors',
@@ -82,11 +94,17 @@ export function getColumns(
           .join(', ')
         return authors || '-'
       },
+      meta: {
+        className: 'hidden md:table-cell',
+      },
     },
     {
       accessorKey: 'file_type',
       header: 'Type',
       cell: ({ row }) => row.original.file_type.toUpperCase(),
+      meta: {
+        className: 'hidden md:table-cell',
+      },
     },
     {
       accessorKey: 'status',
@@ -104,6 +122,9 @@ export function getColumns(
             {status.charAt(0).toUpperCase() + status.slice(1)}
           </Badge>
         )
+      },
+      meta: {
+        className: 'hidden md:table-cell',
       },
     },
     {
@@ -126,6 +147,9 @@ export function getColumns(
         )
       },
       cell: ({ row }) => new Date(row.original.upload_date).toLocaleDateString(),
+      meta: {
+        className: 'hidden md:table-cell',
+      },
     },
     {
       id: 'actions',

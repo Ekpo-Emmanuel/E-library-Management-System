@@ -164,20 +164,20 @@ export default async function DashboardPage() {
         <div className="flex justify-between items-start">
           <div className="space-y-1">
             <h1 className="text-3xl font-bold tracking-tight">Welcome back, {userName}</h1>
-            <p className="text-muted-foreground">
-              {profile?.role === 'admin' ? 'Administrator' : 
-               profile?.role === 'librarian' ? 'Librarian' : 
+          <p className="text-muted-foreground">
+            {profile?.role === 'admin' ? 'Administrator' : 
+             profile?.role === 'librarian' ? 'Librarian' : 
                profile?.role === 'student' ? 'Student' : 'Guest'} Account
-            </p>
-          </div>
+          </p>
+        </div>
           <div className="flex items-center gap-4">
 
             <Button variant="outline" className="flex items-center gap-2" asChild>
-              <Link href="/dashboard/profile">
+          <Link href="/dashboard/profile">
                 <User className="h-4 w-4" />
                 Profile
-              </Link>
-            </Button>
+          </Link>
+        </Button>
           </div>
         </div>
       </div>
@@ -205,7 +205,7 @@ export default async function DashboardPage() {
             </div>
           </CardContent>
         </Card>
-
+        
         <Card className="relative overflow-hidden">
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
@@ -226,7 +226,7 @@ export default async function DashboardPage() {
             )}
           </CardContent>
         </Card>
-
+        
         <Card className="relative overflow-hidden">
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
@@ -248,7 +248,7 @@ export default async function DashboardPage() {
             </div>
           </CardContent>
         </Card>
-
+        
         <Card className="relative overflow-hidden">
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
@@ -266,15 +266,15 @@ export default async function DashboardPage() {
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Currently Borrowed Section */}
+      {/* Currently Borrowed Section */}
         <Card className="lg:col-span-2">
-          <CardHeader>
+        <CardHeader>
             <div className="flex items-center justify-between">
               <div className="space-y-1">
                 <CardTitle className="flex items-center gap-2">
                   <BookMarked className="h-5 w-5 text-primary" />
-                  Currently Borrowed
-                </CardTitle>
+            Currently Borrowed
+          </CardTitle>
                 <CardDescription>Your active borrowed items</CardDescription>
               </div>
               {currentlyBorrowed.length > 0 && (
@@ -283,9 +283,9 @@ export default async function DashboardPage() {
                 </Button>
               )}
             </div>
-          </CardHeader>
-          <CardContent>
-            {currentlyBorrowed.length === 0 ? (
+        </CardHeader>
+        <CardContent>
+          {currentlyBorrowed.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12 text-center">
                 <BookOpen className="h-12 w-12 text-muted-foreground mb-4" />
                 <p className="text-muted-foreground">You don't have any borrowed items.</p>
@@ -295,66 +295,66 @@ export default async function DashboardPage() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {currentlyBorrowed.slice(0, 4).map((item) => (
+              {currentlyBorrowed.slice(0, 4).map((item) => (
                   <Link 
                     key={item.borrow_id} 
                     href={`/dashboard/content/view/${item.digital_content.content_id}`}
                     className="group"
                   >
                     <Card className="overflow-hidden transition-all hover:shadow-lg">
-                      <div className="aspect-[3/4] relative">
-                        {item.digital_content.cover_image_url ? (
-                          <Image
-                            src={item.digital_content.cover_image_url}
-                            alt={item.digital_content.title}
-                            fill
+                  <div className="aspect-[3/4] relative">
+                    {item.digital_content.cover_image_url ? (
+                      <Image
+                        src={item.digital_content.cover_image_url}
+                        alt={item.digital_content.title}
+                        fill
                             className="object-cover transition-transform group-hover:scale-105"
-                          />
-                        ) : (
-                          <div className="w-full h-full bg-muted flex items-center justify-center">
-                            <BookOpen className="h-12 w-12 text-muted-foreground" />
-                          </div>
-                        )}
-                        <div className="absolute top-2 right-2">
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-muted flex items-center justify-center">
+                        <BookOpen className="h-12 w-12 text-muted-foreground" />
+                      </div>
+                    )}
+                    <div className="absolute top-2 right-2">
                           <Badge 
                             variant={isAfter(new Date(), parseISO(item.due_date)) ? 'destructive' : 'secondary'}
                             className="shadow-sm"
                           >
-                            Due {format(parseISO(item.due_date), 'MMM d')}
-                          </Badge>
-                        </div>
-                      </div>
-                      <CardContent className="pt-3">
+                        Due {format(parseISO(item.due_date), 'MMM d')}
+                      </Badge>
+                    </div>
+                  </div>
+                  <CardContent className="pt-3">
                         <h3 className="font-medium line-clamp-1 group-hover:text-primary transition-colors">
                           {item.digital_content.title}
                         </h3>
                         <p className="text-xs text-muted-foreground mt-1">
                           {item.digital_content.file_type.toUpperCase()}
                         </p>
-                      </CardContent>
+                  </CardContent>
                     </Card>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
+                      </Link>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
         {/* Recommendations Section */}
-        {recommendations && recommendations.length > 0 && (
-          <Card>
-            <CardHeader>
+      {recommendations && recommendations.length > 0 && (
+        <Card>
+          <CardHeader>
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
                   <CardTitle className="flex items-center gap-2">
                     <Bookmark className="h-5 w-5 text-primary" />
                     For You
-                  </CardTitle>
+            </CardTitle>
                   <CardDescription>Based on your interests</CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
+                  </div>
+            </div>
+          </CardHeader>
+          <CardContent>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {recommendations.slice(0, 4).map((item) => (
                   <Link 
@@ -363,56 +363,56 @@ export default async function DashboardPage() {
                     className="group"
                   >
                     <Card className="overflow-hidden transition-all hover:shadow-lg">
-                      <div className="aspect-[3/4] relative">
-                        {item.cover_image_url ? (
-                          <Image
-                            src={item.cover_image_url}
-                            alt={item.title}
-                            fill
+                  <div className="aspect-[3/4] relative">
+                    {item.cover_image_url ? (
+                      <Image
+                        src={item.cover_image_url}
+                        alt={item.title}
+                        fill
                             className="object-cover transition-transform group-hover:scale-105"
-                          />
-                        ) : (
-                          <div className="w-full h-full bg-muted flex items-center justify-center">
-                            <BookOpen className="h-12 w-12 text-muted-foreground" />
-                          </div>
-                        )}
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-muted flex items-center justify-center">
+                        <BookOpen className="h-12 w-12 text-muted-foreground" />
                       </div>
-                      <CardContent className="pt-3">
+                    )}
+                  </div>
+                  <CardContent className="pt-3">
                         <h3 className="font-medium line-clamp-1 group-hover:text-primary transition-colors">
                           {item.title}
                         </h3>
                         <p className="text-xs text-muted-foreground mt-1">
-                          {item.book_authors[0]?.authors?.name || 'Unknown Author'}
-                        </p>
-                      </CardContent>
+                      {item.book_authors[0]?.authors?.name || 'Unknown Author'}
+                    </p>
+                  </CardContent>
                     </Card>
-                  </Link>
-                ))}
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button variant="outline" size="sm" className="w-full" asChild>
+                      </Link>
+              ))}
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button variant="outline" size="sm" className="w-full" asChild>
                 <Link href="/dashboard/content">Explore More</Link>
-              </Button>
-            </CardFooter>
-          </Card>
-        )}
+            </Button>
+          </CardFooter>
+        </Card>
+      )}
 
         {/* Popular Content Section */}
         {topContent && topContent.length > 0 && (
-          <Card>
-            <CardHeader>
+        <Card>
+          <CardHeader>
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
                   <CardTitle className="flex items-center gap-2">
                     <TrendingUp className="h-5 w-5 text-primary" />
                     Trending Now
-                  </CardTitle>
+            </CardTitle>
                   <CardDescription>Most popular in the library</CardDescription>
                 </div>
               </div>
-            </CardHeader>
-            <CardContent>
+          </CardHeader>
+          <CardContent>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {topContent.slice(0, 4).map((item) => (
                   <Link 
@@ -421,40 +421,40 @@ export default async function DashboardPage() {
                     className="group"
                   >
                     <Card className="overflow-hidden transition-all hover:shadow-lg">
-                      <div className="aspect-[3/4] relative">
-                        {item.cover_image_url ? (
-                          <Image
-                            src={item.cover_image_url}
-                            alt={item.title}
-                            fill
+                  <div className="aspect-[3/4] relative">
+                    {item.cover_image_url ? (
+                      <Image
+                        src={item.cover_image_url}
+                        alt={item.title}
+                        fill
                             className="object-cover transition-transform group-hover:scale-105"
-                          />
-                        ) : (
-                          <div className="w-full h-full bg-muted flex items-center justify-center">
-                            <BookOpen className="h-12 w-12 text-muted-foreground" />
-                          </div>
-                        )}
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-muted flex items-center justify-center">
+                        <BookOpen className="h-12 w-12 text-muted-foreground" />
                       </div>
-                      <CardContent className="pt-3">
+                    )}
+                  </div>
+                  <CardContent className="pt-3">
                         <h3 className="font-medium line-clamp-1 group-hover:text-primary transition-colors">
                           {item.title}
                         </h3>
                         <p className="text-xs text-muted-foreground mt-1">
-                          {item.book_authors[0]?.authors?.name || 'Unknown Author'}
-                        </p>
-                      </CardContent>
+                      {item.book_authors[0]?.authors?.name || 'Unknown Author'}
+                    </p>
+                  </CardContent>
                     </Card>
-                  </Link>
-                ))}
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button variant="outline" size="sm" className="w-full" asChild>
+                      </Link>
+              ))}
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button variant="outline" size="sm" className="w-full" asChild>
                 <Link href="/dashboard/content">View All</Link>
-              </Button>
-            </CardFooter>
-          </Card>
-        )}
+            </Button>
+          </CardFooter>
+        </Card>
+      )}
       </div>
     </div>
   )

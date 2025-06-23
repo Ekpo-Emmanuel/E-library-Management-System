@@ -224,7 +224,7 @@ export function BorrowedItemsList({ initialFilter = 'all' }: BorrowedItemsListPr
           </div>
           
           <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full md:w-[180px]">
               <Filter className="h-4 w-4 mr-2" />
               <SelectValue placeholder="Filter by status" />
             </SelectTrigger>
@@ -240,26 +240,11 @@ export function BorrowedItemsList({ initialFilter = 'all' }: BorrowedItemsListPr
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Item</TableHead>
-              <TableHead className="cursor-pointer" onClick={() => toggleSort('borrow_date')}>
-                <div className="flex items-center">
-                  Borrowed Date
-                  {getSortIcon('borrow_date')}
-                </div>
-              </TableHead>
-              <TableHead className="cursor-pointer" onClick={() => toggleSort('due_date')}>
-                <div className="flex items-center">
-                  Due Date
-                  {getSortIcon('due_date')}
-                </div>
-              </TableHead>
-              <TableHead className="cursor-pointer" onClick={() => toggleSort('status')}>
-                <div className="flex items-center">
-                  Status
-                  {getSortIcon('status')}
-                </div>
-              </TableHead>
-              <TableHead>Actions</TableHead>
+              <TableHead>Title</TableHead>
+              <TableHead className="hidden md:table-cell">Borrowed On</TableHead>
+              <TableHead className="hidden md:table-cell">Due Date</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead className="hidden md:table-cell">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -301,8 +286,10 @@ export function BorrowedItemsList({ initialFilter = 'all' }: BorrowedItemsListPr
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell>{format(parseISO(item.borrow_date), 'MMM d, yyyy')}</TableCell>
-                  <TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    {format(parseISO(item.borrow_date), 'MMM d, yyyy')}
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
                     <Badge variant={getBadgeVariant(item.due_date, item.status)}>
                       {format(parseISO(item.due_date), 'MMM d, yyyy')}
                     </Badge>
@@ -312,7 +299,7 @@ export function BorrowedItemsList({ initialFilter = 'all' }: BorrowedItemsListPr
                       {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
                     </Badge>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="hidden md:table-cell">
                     {item.status === 'borrowed' && item.user_id === currentUserId && (
                       <>
                         <div className="text-xs text-muted-foreground mb-1">

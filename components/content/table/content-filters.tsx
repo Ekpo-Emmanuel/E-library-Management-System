@@ -95,7 +95,7 @@ export function ContentFilters({
             value={authorFilter?.toString() || 'all'} 
             onValueChange={(value) => updateFilters('author', value === 'all' ? null : value)}
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full md:w-[180px]">
               <User className="h-4 w-4 mr-2" />
               <SelectValue placeholder="Filter by author" />
             </SelectTrigger>
@@ -113,7 +113,7 @@ export function ContentFilters({
             value={genreFilter?.toString() || 'all'} 
             onValueChange={(value) => updateFilters('genre', value === 'all' ? null : value)}
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full md:w-[180px]">
               <BookMarked className="h-4 w-4 mr-2" />
               <SelectValue placeholder="Filter by genre" />
             </SelectTrigger>
@@ -131,7 +131,7 @@ export function ContentFilters({
             value={tagFilter?.toString() || 'all'} 
             onValueChange={(value) => updateFilters('tag', value === 'all' ? null : value)}
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full md:w-[180px]">
               <Tag className="h-4 w-4 mr-2" />
               <SelectValue placeholder="Filter by tag" />
             </SelectTrigger>

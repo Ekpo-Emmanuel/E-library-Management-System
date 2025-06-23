@@ -33,7 +33,7 @@ export default function RootLayout({
         <div className="fixed bottom-4 right-4 flex gap-2">
           <FeedbackDialog />
         </div>
-        <Toaster />
+        <Toaster richColors />
       </body>
     </html>
   );
