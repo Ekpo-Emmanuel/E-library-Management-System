@@ -142,7 +142,7 @@ export default async function ContentDetailPage({
               />
               
               {/* Read Button - Show only if user has borrowed the content */}
-              {borrowStatus.userHasBorrowed && protectedUrl && (
+              {/* {borrowStatus.userHasBorrowed && protectedUrl && (
                 <Button className="w-full" asChild>
                   <Link href={`/dashboard/content/view/${contentId}/reader`}>
                     <BookOpen className="mr-2 h-4 w-4" />
@@ -150,7 +150,7 @@ export default async function ContentDetailPage({
                   </Link>
                 </Button>
               )}
-              
+               */}
               {/* Access Level Badge */}
               <div className="flex items-center gap-2 mt-2">
                 <Lock className="h-4 w-4 text-muted-foreground" />
